@@ -7,9 +7,9 @@ import (
 
 func TestLiveEventValidation(t *testing.T) {
 	tests := []struct {
-		name     string
-		event    *LiveEvent
-		expected bool
+		name            string
+		event           *LiveEvent
+		successExpected bool
 	}{
 		{
 			name: "ValidEvent",
@@ -20,7 +20,7 @@ func TestLiveEventValidation(t *testing.T) {
 				StartDate:   time.Now(),
 				EndDate:     time.Now().Add(time.Hour),
 			},
-			expected: true,
+			successExpected: true,
 		},
 		{
 			name: "EmptyTitle",
@@ -30,7 +30,7 @@ func TestLiveEventValidation(t *testing.T) {
 				StartDate:   time.Now(),
 				EndDate:     time.Now().Add(time.Hour),
 			},
-			expected: false,
+			successExpected: false,
 		},
 		{
 			name: "TitleExceedsMaxLength",
@@ -41,7 +41,7 @@ func TestLiveEventValidation(t *testing.T) {
 				StartDate:   time.Now(),
 				EndDate:     time.Now().Add(time.Hour),
 			},
-			expected: false,
+			successExpected: false,
 		},
 		{
 			name: "ValidTimezone",
@@ -52,7 +52,7 @@ func TestLiveEventValidation(t *testing.T) {
 				StartDate:   time.Now(),
 				EndDate:     time.Now().Add(time.Hour),
 			},
-			expected: true,
+			successExpected: true,
 		},
 		{
 			name: "InvalidTimezone",
@@ -63,7 +63,7 @@ func TestLiveEventValidation(t *testing.T) {
 				StartDate:   time.Now(),
 				EndDate:     time.Now().Add(time.Hour),
 			},
-			expected: false,
+			successExpected: false,
 		},
 	}
 
@@ -71,8 +71,8 @@ func TestLiveEventValidation(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			err := ValidateLiveEvent(test.event)
 
-			if (err == nil) != test.expected {
-				t.Errorf("Test case '%s' failed: expected validation result %t, but got %t", test.name, test.expected, err == nil)
+			if (err == nil) != test.successExpected {
+				t.Errorf("Test case '%s' failed: successExpected validation result %t, but got %t", test.name, test.successExpected, err == nil)
 			}
 		})
 	}

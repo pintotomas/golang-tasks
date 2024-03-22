@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"golang-tasks/task1/models"
 	"golang-tasks/task1/models/db"
 	"time"
@@ -12,17 +13,18 @@ type StorageService struct {
 }
 
 // SaveLiveEvent saves the given live event and returns true on success
-func (s *StorageService) SaveLiveEvent(event *models.LiveEvent) bool {
+func (s *StorageService) SaveLiveEvent(event models.LiveEventInterface) bool {
 	currentTime := time.Now()
-	_ = &db.LiveEventEntity{
-		Title:       event.Title,
-		Description: event.Description,
-		Timezone:    event.Timezone,
-		StartDate:   event.StartDate,
-		EndDate:     event.EndDate,
+	e := &db.LiveEventEntity{
+		Title:       event.GetTitle(),
+		Description: event.GetDescription(),
+		Timezone:    event.GetTimezone(),
+		StartDate:   event.GetStartDate(),
+		EndDate:     event.GetEndDate(),
 		CreatedAt:   currentTime,
 		UpdatedAt:   currentTime,
 	}
+	fmt.Println("Saving live event: " + e.Title)
 	// Here you would typically save the entity to a database or some persistent storage
 	return true
 }

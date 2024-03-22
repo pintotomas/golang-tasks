@@ -13,10 +13,11 @@ The problem we had was that we were using our original model from the legacy sys
 
 To address this challenge without disrupting too much other parts of the code already relying on the original structure, we implemented the adapter pattern and used an interface to access the live event data. So what we did was to replace the services that in the first place used the original object, to use an interface which the new adapter would implement. 
 
+To see the state previous to applying the Adapter pattern, you can check [this commit](https://github.com/pintotomas/golang-tasks/commit/89dd356e639fdf5ee11cb10b3d811ee09074a641)
+
 ## Solution
 
 A diagram representing the solution:
-
 
 ![alt text.](/diagrams/task1/new.png "New solution.")
 
@@ -28,5 +29,16 @@ The incoming data from the client had some differences:
 * The description was split in two fields: Description and Additional Information
 * The timezone was missing (We used UTC by default)
 * Instead of having the start and end date, we had the start date and the duration
-* We had some extra fields like ClientTraceID we didnt require but could come handy for logging purposes for example
+* We had some extra fields like ClientTraceID we didn't require but could come handy for logging purposes for example
 
+### Notes about the solution
+
+* I am only implementing a storage service (without any connection to a db or any other storage) for keeping the task simple, other services can interact with this interface in the same way
+* For the same reason, when I run the task I simulate the json/xml request bodies to avoid the overhead of creating an API and only showcase the part of the problem related to the task
+
+### What could be improved?
+
+* We could aswell have an adapter for the original LiveEvent struct. Although It's unlikely to change since it comes from legacy code nobody really wants to touch, it's still a possibility and by having an adapter for this one we could save time in the future 
+* Maybe we don't want to expose the whole Live Event interface to all services and that could lead to multiple interfaces and adapters
+* To keep it simple I used the standard library for tests, but I recommend using testify for more useful tools for testing. 
+* Similar with logging, I'm using the fmt package for some basic outputs, but I would use the log package from the standard library.
