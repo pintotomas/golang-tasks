@@ -42,3 +42,12 @@ The incoming data from the client had some differences:
 * Maybe we don't want to expose the whole Live Event interface to all services and that could lead to multiple interfaces and adapters
 * To keep it simple I used the standard library for tests, but I recommend using testify for more useful tools for testing. 
 * Similar with logging, I'm using the fmt package for some basic outputs, but I would use the log package from the standard library.
+
+# Task 2
+## Problem description
+
+During the development of a microservice aimed at managing various AWS resources, we encountered a challenge involving the AWS API rate limit quota. 
+We faced limitations while using multiple workers concurrently within separate goroutines for the creation of AWS MediaPackage resources, among other requests we sent.
+For example, if our account was limited to 10 requests per second, AWS would penalize for example for the next 5 seconds, making all the subsequent requests fail
+
+To simplify the problem for the task, I will use an API limiter instead of interacting with AWS, and I will have 3 workers which will attempt to do the requests that they receive in a channel

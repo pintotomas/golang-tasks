@@ -1,7 +1,9 @@
 package main
 
-import "golang-tasks/task1"
+import (
+	"golang-tasks/task2"
+)
 
 func main() {
-	task1.Run()
+	task2.Run()
 }
