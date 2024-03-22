@@ -35,7 +35,7 @@ func Run() {
 
 	service := services.StorageService{}
 
-	if service.SaveLiveEvent(event) {
+	if service.SaveLiveEvent(event) != nil {
 		fmt.Println("Successfully saved the live event!")
 	} else {
 		fmt.Println("Something went wrong saving the live event")
@@ -64,7 +64,7 @@ func Run() {
 	// Create a LiveEventAdapter wrapping the ClientLiveEvent
 	adapter := &models.LiveEventAdapter{ClientLiveEvent: clientLiveEvent}
 
-	if service.SaveLiveEvent(adapter) {
+	if service.SaveLiveEvent(adapter) != nil {
 		fmt.Println("Successfully saved the client live event!")
 	} else {
 		fmt.Println("Something went wrong saving the client live event")

@@ -9,11 +9,10 @@ import (
 
 // StorageService represents a storage service for live events
 type StorageService struct {
-	// You can add any additional fields if needed
 }
 
-// SaveLiveEvent saves the given live event and returns true on success
-func (s *StorageService) SaveLiveEvent(event models.LiveEventInterface) bool {
+// SaveLiveEvent saves the given live event and returns a live event entity
+func (s *StorageService) SaveLiveEvent(event models.LiveEventInterface) *db.LiveEventEntity {
 	currentTime := time.Now()
 	e := &db.LiveEventEntity{
 		Title:       event.GetTitle(),
@@ -26,5 +25,5 @@ func (s *StorageService) SaveLiveEvent(event models.LiveEventInterface) bool {
 	}
 	fmt.Println("Saving live event: " + e.Title)
 	// Here you would typically save the entity to a database or some persistent storage
-	return true
+	return e
 }
