@@ -41,8 +41,6 @@ func (w *Worker) Process() {
 							// Channel is full, Coworker was already notified
 						}
 					}
-					// Back off
-					time.Sleep(time.Second)
 				} else {
 					atomic.AddInt32(w.Success, 1)
 				}

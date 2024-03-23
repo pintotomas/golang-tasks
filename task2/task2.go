@@ -26,7 +26,7 @@ func Run() {
 	// Create backoff channels for each worker
 	var backoffChannels [3]chan struct{}
 	for i := range backoffChannels {
-		backoffChannels[i] = make(chan struct{})
+		backoffChannels[i] = make(chan struct{}, 1)
 	}
 
 	// Start worker goroutines
@@ -34,14 +34,8 @@ func Run() {
 
 		// Create a slice to store coworkers backoff channels
 		var coworkersBackoffChannels []chan<- struct{}
-
-		// Add the other workers Backoff channels  as sending only channels for sending the signal
-		if i > 0 {
-			coworkersBackoffChannels = append(coworkersBackoffChannels, backoffChannels[i-1])
-		}
-
-		if i < len(backoffChannels)-1 {
-			coworkersBackoffChannels = append(coworkersBackoffChannels, backoffChannels[i+1])
+		for _, ch := range backoffChannels {
+			coworkersBackoffChannels = append(coworkersBackoffChannels, ch)
 		}
 
 		worker := &Worker{

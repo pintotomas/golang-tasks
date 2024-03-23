@@ -14,7 +14,7 @@ Developed using go version 1.19.1.
 
 -depth={int} (for task 3, default 10)
 
--timeout={int} (fotask 3, default 10)
+-timeout={int} (for task 3, default 10)
 
 For example:
 
@@ -93,9 +93,9 @@ To simplify the problem for the task, I will use an API limiter instead of inter
 
 To solve the issue of requests being throttled by the limiter, I will implement a backoff once I get a request limited, and I will send a signal to the other workers to avoid sending more requests and to backoff for a few seconds
 
-This solution was challenging and quite complex, but as you can see on the results we have way less requests failing. Previously, it was succeeding 20 out of 50 times, and now it succeeds 40 times
+This solution was challenging and quite complex, but as you can see on the results we have way less requests failing. Previously, it was succeeding 20 out of 50 times, and now it succeeds at least 40 times in average
 
-For the worker I used reading only channels for both the requests and its own backoff signal channel. And I created an array of send only channels to notify the other workers
+For the worker I used reading only channels for both the requests and its own backoff signal channel with capacity 1. And I created an array of send only channels to notify the other workers
 
 Previously we were only ranging on the requests channel, and now we have multiple channels, so we should be careful with potential deadlocks, for that reason I add default cases in the selects to prevent deadlocking
 
