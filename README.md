@@ -16,6 +16,10 @@ Developed using go version 1.19.1.
 
 -timeout={int} (fotask 3, default 10)
 
+For example:
+
+docker run my-go-app ./main -task=1
+
 To run tests:
 
 `docker run my-go-app /bin/sh -c "go test -race ./task1/models && go test -race ./task1/services && go test -race ./task2"`
