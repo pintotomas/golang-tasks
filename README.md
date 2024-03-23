@@ -18,7 +18,7 @@ Developed using go version 1.19.1.
 
 For example:
 
-docker run my-go-app ./main -task=1
+`docker run my-go-app ./main -task=1`
 
 To run tests:
 
