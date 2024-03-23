@@ -1,3 +1,26 @@
+# Running instructions
+
+Developed using go version 1.19.1. to run:
+
+`go build main.go`
+
+Then, run `./main` with the following flags
+
+-task={int} (1,2,3) (required)
+
+-url={string} (required if task=3)
+
+
+-depth={int} (for task 3, default 10)
+
+-timeout={int} (fotask 3, default 10)
+
+To run the tests, please run:
+
+`go test -race ./task1`
+
+`go test -race ./task2`
+
 # Task 1
 ## Problem description
 
@@ -73,3 +96,11 @@ The most important one and that was hard to detect at first, was the non-blockin
 ### What could be improved?
 
 * A retry can be added after each back off, so we run all requests successfully
+
+# Task 3
+
+For this task I've decided to do a simple web crawler, so given a website URL I will print all URLs its linking to, and also I will have a parameter deep, so if the deep value is 2 then I will also print the URLs that are linked in each link
+
+I chose this task to showcase my ability to work with the standard net/http package and a package that is not in the standard library to manipulate html (golang.org/x/net/html)
+
+Also, something interesting that I haven't seen in other programming languages is the usage of context. For this small application, I'm leveraging its usage for finishing the application in a certain amount of time, since given a url and a certain depth, it could take a big amount of time for the task to finish. Since our context has a timeout, it will finish all the calls to Crawl in the stack once the case `<-ctx.Done():` is met. There are a more uses for Context in go (Cancellation and Sending values for example), and it's always a good practice to use it in our applications
