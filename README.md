@@ -1,25 +1,35 @@
 # Running instructions
 
-Developed using go version 1.19.1. to run:
+Developed using go version 1.19.1.
 
-`go build main.go`
+## Using docker:
 
-Then, run `./main` with the following flags
+`docker build -t my-go-app .`
+
+`docker run my-go-app ./main ` with the following flags
 
 -task={int} (1,2,3) (required)
 
--url={string} (required if task=3)
-
+-url={string} (required if task=3, and it must have the http or https protocol)
 
 -depth={int} (for task 3, default 10)
 
 -timeout={int} (fotask 3, default 10)
 
+To run tests:
+
+`docker run my-go-app /bin/sh -c "go test -race ./task1/models && go test -race ./task1/services && go test -race ./task2"`
+
+## Locally:
+
+`go build main.go`
+
+Then, run `./main` using the same flags as above
+
 To run the tests, please run:
 
-`go test -race ./task1`
+`go test -race ./task1/models && go test -race ./task1/services && go test -race ./task2` 
 
-`go test -race ./task2`
 
 # Task 1
 ## Problem description
